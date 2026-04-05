@@ -1,4 +1,4 @@
-#include "physics.h"
+#include "myLib.h"
 
 //Funciones Fisicas
 void updateParticle(Particle *particle) {

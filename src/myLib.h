@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <time.h>
 #include "raylib.h"
-#define GRAVITY 1
-#define WIDTH 900
-#define HEIGHT 600
+#define GRAVITY 0
+#define WIDTH 1200
+#define HEIGHT 800
+#define DAMPER 1
 
 typedef struct {
-    float x, y, dx, dy, r;
+    double x, y, dx, dy, r;
 } Particle;
 
 //Funciones Fisicas

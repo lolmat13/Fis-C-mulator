@@ -3,19 +3,19 @@
 //Funciones Fisicas
 void updateParticle(Particle *particle) {
     //Cambio de Posicion y aceleracion de gravedad
+    particle->dy += GRAVITY;
     particle->x += particle->dx;
     particle->y += particle->dy;
-    //particle->dy += GRAVITY;
     
-    float x = particle->x;
-    float y = particle->y;
-    float r = particle->r;
+    double x = particle->x;
+    double y = particle->y;
+    double r = particle->r;
 
     //Colisiones con bordes
-    if (x - r < 0) {particle->x = r; particle->dx *= -1;} //borde izquierdo
-    if (x + r > WIDTH) {particle->x = WIDTH - r; particle->dx *= -1;} //borde derecho
-    if (y - r < 0) {particle->y = r; particle->dy *= -1;}  //borde superior
-    if (y + r > HEIGHT) {particle->y = HEIGHT - r; particle->dy *= -1;} //borde inferior    
+    if (x - r < 0) {particle->x = r; particle->dx *= -DAMPER;} //borde izquierdo
+    if (x + r > WIDTH) {particle->x = WIDTH - r; particle->dx *= -DAMPER;} //borde derecho
+    if (y - r < 0) {particle->y = r; particle->dy *= -DAMPER;}  //borde superior
+    if (y + r > HEIGHT) {particle->y = HEIGHT - r; particle->dy *= -DAMPER;} //borde inferior    
 }
 
 void updateParticles(Particle particles[], int n) {
@@ -35,15 +35,33 @@ void collisionParticles(Particle particles[], int n){
             p1=particles[i];
             p2=particles[j];
 
-            float d = sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+            Vector2 p1Pos = {p1.x, p1.y};
+            Vector2 p2Pos = {p2.x, p2.y};
+            
 
-            if ( d <= p1.r + p2.r) {
-                printf("particles collided!\n");
-                float normX = (p1.x - p2.x) / d;
-                float normY = (p1.y - p2.y) / d;
-                float overlap = d - (p2.r - p1.r);
-                p1.x += normX * overlap;
-                p1.y += normY * overlap;
+            if (CheckCollisionCircles(p1Pos, p1.r, p2Pos, p2.r)) {
+                //eliminar overlap
+                double distX = p1.x - p2.x;
+                double distY = p1.y - p2.y;
+                double absD = sqrt(pow(distX, 2) + pow(distY, 2));
+                double normX = distX / absD;
+                double normY = distY / absD;
+                double overlap = p2.r + p1.r - absD;
+                
+                particles[i].x += normX * overlap / 2;
+                particles[i].y += normY * overlap / 2;
+                particles[j].x += -normX * overlap / 2;
+                particles[j].y += -normY * overlap / 2;
+
+                //cambio de direcicon vector velocidad
+                double tanX = -normY;
+                double tanY = normX;
+
+                particles[i].dx = DAMPER*(p1.dx * tanX + p1.dy * tanY);
+                particles[i].dy = DAMPER*(p2.dx * normX + p2.dy * normY);
+                particles[j].dx = DAMPER*(p2.dx * tanX + p2.dy * tanY);
+                particles[j].dy = DAMPER*(p1.dx * normX + p1.dy * normY);
+
             }
         }
     }
@@ -63,14 +81,14 @@ void drawParticles(Particle particles[], int n) {
 //Funciones Misc
 int initParticles(Particle particles[]) {
     SetRandomSeed(time(NULL));
-    int n = GetRandomValue(5, 20);
+    int n = GetRandomValue(10, 10);
 
     for (int i = 0; i < n; i++) {
-        particles[i].x = GetRandomValue(100,500);
-        particles[i].y = GetRandomValue(100,800);
-        particles[i].dx = GetRandomValue(-15, 15);
-        particles[i].dy = GetRandomValue(-15, 15);
-        particles[i].r = GetRandomValue(10, 30);
+        particles[i].x = GetRandomValue(100, HEIGHT - 100);
+        particles[i].y = GetRandomValue(100, WIDTH - 100);
+        particles[i].dx = GetRandomValue(-5, 5);
+        particles[i].dy = GetRandomValue(-5, 5);
+        particles[i].r = GetRandomValue(10, 10);
     }
     return n;
 }

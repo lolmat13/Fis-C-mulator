@@ -4,10 +4,10 @@ El proposito de este proyecto es ayudar a los alumnos de FIS111 a desarrollar un
 Este programa les servira para poder jugar con distintas situaciones fisicas, y asi lograr internalizar la intuicion y sentido comun para guiarlos en una direccion general de soluciones al momento de realizar evaluaciones.
 
 # El Equipo
-Franco Cardenas
-Claudio Moya
-Martín Muñoz
-Sebastian Villalobos
+Franco Cardenas\
+Claudio Moya\
+Martín Muñoz\
+Sebastian Villalobos\
 
 # El Proyecto
 ## Que hemos hecho hasta ahora

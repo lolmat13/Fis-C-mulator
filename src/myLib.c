@@ -1,94 +1,104 @@
 #include "myLib.h"
 
 //Funciones Fisicas
+float dot(Vector2 v, Vector2 u){
+    return v.x * u.x + v.y * u.y;
+}
+
+Vector2 vectorSum(Vector2 v, Vector2 u){
+    Vector2 sum = {v.x + u.x, v.y + u.y};
+    return sum;
+}
+
+Vector2 vectorMult(Vector2 v, float n){
+    Vector2 scaled = {v.x * n, v.y * n};
+    return scaled;
+}
+
 void updateParticle(Particle *particle) {
     //Cambio de Posicion y aceleracion de gravedad
-    particle->dy += GRAVITY;
-    particle->x += particle->dx;
-    particle->y += particle->dy;
+    particle->dpos.y += GRAVITY;
+    particle->pos = vectorSum(particle->pos, particle->dpos);
     
-    double x = particle->x;
-    double y = particle->y;
-    double r = particle->r;
+    float x = particle->pos.x;
+    float y = particle->pos.y;
+    float r = particle->r;
 
     //Colisiones con bordes
-    if (x - r < 0) {particle->x = r; particle->dx *= -DAMPER;} //borde izquierdo
-    if (x + r > WIDTH) {particle->x = WIDTH - r; particle->dx *= -DAMPER;} //borde derecho
-    if (y - r < 0) {particle->y = r; particle->dy *= -DAMPER;}  //borde superior
-    if (y + r > HEIGHT) {particle->y = HEIGHT - r; particle->dy *= -DAMPER;} //borde inferior    
+    if (x - r < 0) {particle->pos.x = r; particle->dpos.x *= -DAMPER;} //borde izquierdo
+    if (x + r > WIDTH) {particle->pos.x = WIDTH - r; particle->dpos.x *= -DAMPER;} //borde derecho
+    if (y - r < 0) {particle->pos.y = r; particle->dpos.y *= -DAMPER;}  //borde superior
+    if (y + r > HEIGHT) {particle->pos.y = HEIGHT - r; particle->dpos.y *= -DAMPER;} //borde inferior    
 }
 
 void updateParticles(Particle particles[], int n) {
     for (int i = 0; i < n; i++) {
         updateParticle(&particles[i]);
     }
+    collisionParticles(particles, n);
 }
 
 void collisionParticles(Particle particles[], int n){
-    Particle p1;
-    Particle p2;
+    Particle *p1;
+    Particle *p2;
 
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (i==j) break; //No colisionar particula con si misma
+        p1=&particles[i];
+        for (int j = i + 1; j < n; j++) {
+            p2=&particles[j];
 
-            p1=particles[i];
-            p2=particles[j];
-
-            Vector2 p1Pos = {p1.x, p1.y};
-            Vector2 p2Pos = {p2.x, p2.y};
-            
-
-            if (CheckCollisionCircles(p1Pos, p1.r, p2Pos, p2.r)) {
+            if (CheckCollisionCircles(p1->pos, p1->r, p2->pos, p2->r)) {
                 //eliminar overlap
-                double distX = p1.x - p2.x;
-                double distY = p1.y - p2.y;
-                double absD = sqrt(pow(distX, 2) + pow(distY, 2));
-                double normX = distX / absD;
-                double normY = distY / absD;
-                double overlap = p2.r + p1.r - absD;
+                Vector2 dist = vectorSum(p1->pos, vectorMult(p2->pos, -1)); //vector desde p2 a p1
+                dist.x = abs(dist.x);
+                dist.y = abs(dist.y);
+                float absD = sqrt(dot(dist, dist)); //magnitud de ese vector
+                Vector2 norm = vectorMult(dist, 1/absD);  //vector p2->p1 normalizado
+                float overlap = p1->r + p2->r - absD;
                 
-                particles[i].x += normX * overlap / 2;
-                particles[i].y += normY * overlap / 2;
-                particles[j].x += -normX * overlap / 2;
-                particles[j].y += -normY * overlap / 2;
+                p1->pos = vectorSum(p1->pos, vectorMult(norm, -overlap / 2));
+                p2->pos = vectorSum(p2->pos, vectorMult(norm, -overlap / 2));
 
                 //cambio de direcicon vector velocidad
-                double tanX = -normY;
-                double tanY = normX;
+                Vector2 tan = {norm.y, -norm.x}; //vector perpendicular al normal
+                Vector2 temp1 = p1->dpos;
+                Vector2 temp2 = p2->dpos;
 
-                particles[i].dx = DAMPER*(p1.dx * tanX + p1.dy * tanY);
-                particles[i].dy = DAMPER*(p2.dx * normX + p2.dy * normY);
-                particles[j].dx = DAMPER*(p2.dx * tanX + p2.dy * tanY);
-                particles[j].dy = DAMPER*(p1.dx * normX + p1.dy * normY);
-
+                p1->dpos.y = DAMPER*(dot(temp2, norm));
+                p1->dpos.x = DAMPER*(dot(temp2, tan));
+                p2->dpos.y = DAMPER*(dot(temp1, norm));
+                p2->dpos.x = DAMPER*(dot(temp1, tan));
             }
         }
     }
 }
 
 //Funciones Graficas
-void drawParticle(Particle *particle) {
-    DrawCircle(particle->x, particle->y, particle->r, WHITE);
+void drawParticle(Particle *particle, int n) {
+    DrawCircle(particle->pos.x, particle->pos.y, particle->r, WHITE);
+    char c[3];
+    sprintf(c, "%d", n);
+    DrawText(c, particle->pos.x-5, particle->pos.y-10, 20, BLACK);
 }
 
 void drawParticles(Particle particles[], int n) {
     for (int i = 0; i < n; i++) {
-        drawParticle(&particles[i]);
+        drawParticle(&particles[i], i+1);
     }
 }
 
 //Funciones Misc
 int initParticles(Particle particles[]) {
     SetRandomSeed(time(NULL));
-    int n = GetRandomValue(10, 10);
+    int n = GetRandomValue(2, 2);
 
     for (int i = 0; i < n; i++) {
-        particles[i].x = GetRandomValue(100, HEIGHT - 100);
-        particles[i].y = GetRandomValue(100, WIDTH - 100);
-        particles[i].dx = GetRandomValue(-5, 5);
-        particles[i].dy = GetRandomValue(-5, 5);
-        particles[i].r = GetRandomValue(10, 10);
+        particles[i].pos.x = GetRandomValue(100, WIDTH - 100);
+        particles[i].pos.y = GetRandomValue(500, 500);
+        particles[i].dpos.x = GetRandomValue(-5, 5);
+        particles[i].dpos.y = GetRandomValue(0, 0);
+        particles[i].r = GetRandomValue(20, 20);
+        particles[i].m = particles[i].r;
     }
     return n;
 }

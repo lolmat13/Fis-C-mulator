@@ -11,7 +11,7 @@ Sebastian Villalobos
 
 # El Proyecto
 ## Que hemos hecho hasta ahora
-
+Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion 
 ## Que nos falta hacer
-
+Faltan por añadir superficies colisionables y figuras hechas a partir de estas, ya que preferimos primeramente implementar las funciones basicas graficas del simulador, ya que estas son clave para su funcionamiento.
 # Referencias

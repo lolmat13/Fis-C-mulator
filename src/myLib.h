@@ -3,12 +3,13 @@
 #include <time.h>
 #include <stdlib.h>
 #include "raylib.h"
-#define SUB_TICKS 4
-#define GRAVITY 0
+#define SUB_TICKS 8.0
+#define GRAVITY 1
 #define WIDTH 1200
 #define HEIGHT 800
 #define DAMPER 1
 
+//Objetos Fisicos
 typedef struct {
     Vector2 pos, dpos;
     float r, m;
@@ -19,6 +20,7 @@ typedef struct {
 float dot(Vector2 v, Vector2 u);
 Vector2 vectorSum(Vector2 v, Vector2 u);
 Vector2 vectorMult(Vector2 v, float n);
+Vector2 vectorNorm(Vector2 v);
 void updateParticle(Particle *particle);
 void updateParticles(Particle particles[], int n);
 void collisionParticles(Particle particles[], int n);

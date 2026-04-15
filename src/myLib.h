@@ -3,11 +3,12 @@
 #include <time.h>
 #include <stdlib.h>
 #include "raylib.h"
-#define SUB_TICKS 8.0
-#define GRAVITY 1
 #define WIDTH 1200
 #define HEIGHT 800
-#define DAMPER 1
+#define ARRAY_SIZE(array) (sizeof(array)/sizeof(array[0]))
+extern float DAMPER;
+extern float SUB_TICKS;
+extern float GRAVITY;
 
 //Objetos Fisicos
 typedef struct {
@@ -15,19 +16,30 @@ typedef struct {
     float r, m;
 } Particle;
 
+extern Particle particles[];
+extern int particlesAmount;
 
-//Funciones Fisicas
+typedef struct {
+    Particle p1, p2;
+    float distance;
+} Link;
+
+//Funciones Vectoriales
 float dot(Vector2 v, Vector2 u);
 Vector2 vectorSum(Vector2 v, Vector2 u);
 Vector2 vectorMult(Vector2 v, float n);
 Vector2 vectorNorm(Vector2 v);
+
+//Funciones Fisicas
 void updateParticle(Particle *particle);
-void updateParticles(Particle particles[], int n);
+void simulate(Particle particles[]);
 void collisionParticles(Particle particles[], int n);
 
 //Funciones Graficas
 void drawParticle(Particle *particle, int n);
-void drawParticles(Particle particles[], int n);
+void drawParticles(Particle particles[]);
+void drawLine();
 
 //Funciones Misc
-int initParticles(Particle particles[]);
+void initParticle(Particle particles[], int n);
+void listElements(Particle particles[]);

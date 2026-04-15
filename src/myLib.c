@@ -1,5 +1,11 @@
 #include "myLib.h"
 
+float DAMPER = 0.9;
+float SUB_TICKS = 8;
+float GRAVITY = 10;
+Particle particles[];
+int particlesAmount = 0;
+
 //Funciones Vectoriales
 float dot(Vector2 v, Vector2 u){
     return v.x * u.x + v.y * u.y;
@@ -37,11 +43,11 @@ void updateParticle(Particle *particle) {
     if (y + r > HEIGHT) {particle->pos.y = HEIGHT - r; particle->dpos.y *= -DAMPER;} //borde inferior    
 }
 
-void updateParticles(Particle particles[], int n) {
-    for (int i = 0; i < n; i++) {
+void simulate(Particle particles[]) {
+    for (int i = 0; i < particlesAmount; i++) {
         updateParticle(&particles[i]);
     }
-    collisionParticles(particles, n);
+    collisionParticles(particles, particlesAmount);
 }
 
 void collisionParticles(Particle particles[], int n){
@@ -59,7 +65,6 @@ void collisionParticles(Particle particles[], int n){
                 float absD = sqrt(dot(dist, dist)); //magnitud de ese vector
                 Vector2 normD = vectorMult(dist, 1/absD);  //vector p2->p1 normalizado
                 float overlap = p1->r + p2->r - absD;
-                
                 p1->pos = vectorSum(p1->pos, vectorMult(normD, overlap / 2));
                 p2->pos = vectorSum(p2->pos, vectorMult(normD, -overlap / 2));
 
@@ -71,15 +76,14 @@ void collisionParticles(Particle particles[], int n){
                 Vector2 dpos1t = vectorMult(tanD, dot(temp1, tanD) / dot(tanD, tanD));
                 Vector2 dpos2n = vectorMult(normD, dot(temp2, normD) / dot(normD, normD));
                 Vector2 dpos2t = vectorMult(tanD, dot(temp2, tanD) / dot(tanD, tanD));
-
                 p1->dpos = vectorMult(vectorSum(dpos2n, dpos1t), DAMPER);
                 p2->dpos = vectorMult(vectorSum(dpos1n, dpos2t), DAMPER);
-
-                
             }
         }
     }
 }
+
+
 
 //Funciones Graficas
 void drawParticle(Particle *particle, int n) {
@@ -89,24 +93,24 @@ void drawParticle(Particle *particle, int n) {
     DrawText(c, particle->pos.x-5, particle->pos.y-10, 20, BLACK);
 }
 
-void drawParticles(Particle particles[], int n) {
-    for (int i = 0; i < n; i++) {
-        drawParticle(&particles[i], i+1);
+void drawParticles(Particle particles[]) {
+    for (int i = 0; i < particlesAmount; i++) {
+        drawParticle(&particles[i], particlesAmount);
     }
 }
 
 //Funciones Misc
-int initParticles(Particle particles[]) {
-    SetRandomSeed(time(NULL));
-    int n = GetRandomValue(100, 100);
+void initParticle(Particle particles[], int n) {
+    printf("Ingrese posicion inicial X (Numero Real):\n"); scanf("%f", &particles[n].pos.x);
+    printf("Ingrese posicion inicial Y (Numero Real):\n"); scanf("%f", &particles[n].pos.y);
+    printf("Ingrese velocidad inicial X (Numero Real):\n"); scanf("%f", &particles[n].dpos.x);
+    printf("Ingrese velocidad inicial Y (Numero Real):\n"); scanf("%f", &particles[n].dpos.x);
+    printf("Ingrese radio (Numero Real):\n"); scanf("%f", &particles[n].r); 
+    printf("Ingrese masa (Numero Real):\n"); scanf("%f", &particles[n].m);
+    particlesAmount++;
+    return;
+}
 
-    for (int i = 0; i < n; i++) {
-        particles[i].pos.x = GetRandomValue(100, WIDTH - 100);
-        particles[i].pos.y = GetRandomValue(100, HEIGHT - 100);
-        particles[i].dpos.x = GetRandomValue(-5, 5) / SUB_TICKS;
-        particles[i].dpos.y = GetRandomValue(-5, 5) / SUB_TICKS;
-        particles[i].r = GetRandomValue(20, 20);
-        particles[i].m = particles[i].r;
-    }
-    return n;
+void listElements(Particle particles[]){
+
 }

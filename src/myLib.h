@@ -32,14 +32,14 @@ Vector2 vectorNorm(Vector2 v);
 
 //Funciones Fisicas
 void updateParticle(Particle *particle);
-void simulate(Particle particles[]);
-void collisionParticles(Particle particles[], int n);
+void simulate();
+void collisionParticles();
 
 //Funciones Graficas
-void drawParticle(Particle *particle, int n);
-void drawParticles(Particle particles[]);
+void drawParticle(Particle *particle, int i);
+void drawParticles();
 void drawLine();
 
 //Funciones Misc
-void initParticle(Particle particles[], int n);
-void listElements(Particle particles[]);
+void initParticle();
+void listElements();

@@ -2,8 +2,8 @@
 
 float DAMPER = 0.9;
 float SUB_TICKS = 8;
-float GRAVITY = 10;
-Particle particles[];
+float GRAVITY = 0;
+Particle particles[10];
 int particlesAmount = 0;
 
 //Funciones Vectoriales
@@ -43,20 +43,20 @@ void updateParticle(Particle *particle) {
     if (y + r > HEIGHT) {particle->pos.y = HEIGHT - r; particle->dpos.y *= -DAMPER;} //borde inferior    
 }
 
-void simulate(Particle particles[]) {
+void simulate() {
     for (int i = 0; i < particlesAmount; i++) {
         updateParticle(&particles[i]);
     }
     collisionParticles(particles, particlesAmount);
 }
 
-void collisionParticles(Particle particles[], int n){
+void collisionParticles(){
     Particle *p1;
     Particle *p2;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < particlesAmount; i++) {
         p1=&particles[i];
-        for (int j = i+1; j < n; j++) {
+        for (int j = i+1; j < particlesAmount; j++) {
             p2=&particles[j];
 
             if (CheckCollisionCircles(p1->pos, p1->r, p2->pos, p2->r)) {
@@ -86,31 +86,38 @@ void collisionParticles(Particle particles[], int n){
 
 
 //Funciones Graficas
-void drawParticle(Particle *particle, int n) {
+void drawParticle(Particle *particle, int i) {
     DrawCircle(particle->pos.x, particle->pos.y, particle->r, WHITE);
     char c[3];
-    sprintf(c, "%d", n);
+    sprintf(c, "%d", i);
     DrawText(c, particle->pos.x-5, particle->pos.y-10, 20, BLACK);
 }
 
-void drawParticles(Particle particles[]) {
+void drawParticles() {
     for (int i = 0; i < particlesAmount; i++) {
-        drawParticle(&particles[i], particlesAmount);
+        drawParticle(&particles[i], i);
     }
 }
 
 //Funciones Misc
-void initParticle(Particle particles[], int n) {
-    printf("Ingrese posicion inicial X (Numero Real):\n"); scanf("%f", &particles[n].pos.x);
-    printf("Ingrese posicion inicial Y (Numero Real):\n"); scanf("%f", &particles[n].pos.y);
-    printf("Ingrese velocidad inicial X (Numero Real):\n"); scanf("%f", &particles[n].dpos.x);
-    printf("Ingrese velocidad inicial Y (Numero Real):\n"); scanf("%f", &particles[n].dpos.x);
-    printf("Ingrese radio (Numero Real):\n"); scanf("%f", &particles[n].r); 
-    printf("Ingrese masa (Numero Real):\n"); scanf("%f", &particles[n].m);
+void initParticle() {
+    printf("Ingrese posicion inicial X (Numero Real):\n"); scanf("%f", &particles[particlesAmount].pos.x);
+    printf("Ingrese posicion inicial Y (Numero Real):\n"); scanf("%f", &particles[particlesAmount].pos.y);
+    printf("Ingrese velocidad inicial X (Numero Real):\n"); scanf("%f", &particles[particlesAmount].dpos.x);
+    printf("Ingrese velocidad inicial Y (Numero Real):\n"); scanf("%f", &particles[particlesAmount].dpos.y);
+    printf("Ingrese radio (Numero Real):\n"); scanf("%f", &particles[particlesAmount].r); 
+    printf("Ingrese masa (Numero Real):\n"); scanf("%f", &particles[particlesAmount].m);
     particlesAmount++;
     return;
 }
 
-void listElements(Particle particles[]){
-
+void listElements(){
+    if (particlesAmount){
+        for (int i = 0; i < particlesAmount; i++){
+            printf("Particula %d: Posicion (%.2f, %.2f), Velocidad (%.2f, %.2f), Radio (%.2f), Masa (%.2f)\n",
+                i+1, particles[i].pos.x, particles[i].pos.y, particles[i].dpos.x, particles[i].dpos.y, particles[i].r, particles[i].m);
+        }
+        return;
+    }
+    printf("No hay particulas creadas.\n");
 }

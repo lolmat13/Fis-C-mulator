@@ -20,7 +20,7 @@ int main() {
     do
     {
         printf(
-            "Escoger Opcion (1 - x):\n"
+            "Escoger Opcion:\n"
             "1. Iniciar Simulacion.\n"
             "2. Crear Particula.\n"
             "3. Crear Superficie.\n"
@@ -51,12 +51,12 @@ int main() {
             break;
             
         case 5:
-            printf("Ingresar valor gravedad (Numero Real Positivo).\n");
+            printf("Ingresar valor gravedad (Numero Real Positivo, Default 0).\n");
             scanf("%f", &GRAVITY);
             break;
             
         case 6:
-            printf("Ingresar valor energia despues de colision ( [0, 1], Default: 1).\n");
+            printf("Ingresar coeficiente energia despues de colision ([0, 1], Default: 1).\n");
             scanf("%f", &DAMPER);
             break;
             

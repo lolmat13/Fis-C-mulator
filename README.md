@@ -10,6 +10,16 @@ Martín Muñoz\
 Sebastian Villalobos
 
 # El Proyecto
+El proyecto, como mencionamos anteriormente, apunta a visualizar problemas que podrian ser visibles en el ramo de FIS-111, lo que incluiria:
+- Gravedad que afecte a los objetos presentes
+- Colisiones entre particulas
+- Objetos dinamicos
+- Superficies colisionables
+- Roce
+- Poleas
+- Resortes
+
+Por ahora, planeamos tener listas las funciones de gravedad, particulas, y superficies colisionables, trabajando en el resto mientras avance el tiempo.
 ## Que hemos hecho hasta ahora
 Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion 
 ## Que nos falta hacer

@@ -20,7 +20,7 @@ extern Particle particles[];
 extern int particlesAmount;
 
 typedef struct {
-    Particle p1, p2;
+    Particle *p1, *p2;
     float distance;
 } Link;
 
@@ -31,9 +31,10 @@ Vector2 vectorMult(Vector2 v, float n);
 Vector2 vectorNorm(Vector2 v);
 
 //Funciones Fisicas
-void updateParticle(Particle *particle);
+void updateParticles();
 void simulate();
-void collisionParticles();
+void collideParticles();
+void maintainLinkDistance();
 
 //Funciones Graficas
 void drawParticle(Particle *particle, int i);
@@ -42,4 +43,7 @@ void drawLine();
 
 //Funciones Misc
 void initParticle();
+void initLink();
+void listParticles();
+void listLinks();
 void listElements();

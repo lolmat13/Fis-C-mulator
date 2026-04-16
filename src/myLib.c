@@ -1,10 +1,12 @@
 #include "myLib.h"
 
-float DAMPER = 0.9;
+float DAMPER = 1;
 float SUB_TICKS = 8;
 float GRAVITY = 0;
 Particle particles[10];
+Link links[10];
 int particlesAmount = 0;
+int linksAmount = 0;
 
 //Funciones Vectoriales
 float dot(Vector2 v, Vector2 u){
@@ -27,30 +29,32 @@ Vector2 vectorNorm(Vector2 v){
 }
 
 //Funciones Fisicas
-void updateParticle(Particle *particle) {
-    //Cambio de Posicion y aceleracion de gravedad
-    particle->dpos.y += GRAVITY / SUB_TICKS;
-    particle->pos = vectorSum(particle->pos, vectorMult(particle->dpos, 1 / SUB_TICKS));
-    
-    float x = particle->pos.x;
-    float y = particle->pos.y;
-    float r = particle->r;
-
-    //Colisiones con bordes
-    if (x - r < 0) {particle->pos.x = r; particle->dpos.x *= -DAMPER;} //borde izquierdo
-    if (x + r > WIDTH) {particle->pos.x = WIDTH - r; particle->dpos.x *= -DAMPER;} //borde derecho
-    if (y - r < 0) {particle->pos.y = r; particle->dpos.y *= -DAMPER;}  //borde superior
-    if (y + r > HEIGHT) {particle->pos.y = HEIGHT - r; particle->dpos.y *= -DAMPER;} //borde inferior    
-}
-
 void simulate() {
-    for (int i = 0; i < particlesAmount; i++) {
-        updateParticle(&particles[i]);
-    }
-    collisionParticles(particles, particlesAmount);
+    updateParticles();
+    collideParticles(particles, particlesAmount);
+    maintainLinkDistance();
 }
 
-void collisionParticles(){
+void updateParticles() {
+    for (int i = 0; i < particlesAmount; i++){
+        //Cambio de Posicion y aceleracion de gravedad
+        Particle *particle = &particles[i];
+        particle->dpos.y += GRAVITY / SUB_TICKS;
+        particle->pos = vectorSum(particle->pos, vectorMult(particle->dpos, 1 / SUB_TICKS));
+        
+        float x = particle->pos.x;
+        float y = particle->pos.y;
+        float r = particle->r;
+
+        //Colisiones con bordes
+        if (x - r < 0) {particle->pos.x = r; particle->dpos.x *= -DAMPER;} //borde izquierdo
+        if (x + r > WIDTH) {particle->pos.x = WIDTH - r; particle->dpos.x *= -DAMPER;} //borde derecho
+        if (y - r < 0) {particle->pos.y = r; particle->dpos.y *= -DAMPER;}  //borde superior
+        if (y + r > HEIGHT) {particle->pos.y = HEIGHT - r; particle->dpos.y *= -DAMPER;} //borde inferior    
+    }
+}
+
+void collideParticles(){
     Particle *p1;
     Particle *p2;
 
@@ -83,6 +87,18 @@ void collisionParticles(){
     }
 }
 
+void maintainLinkDistance(){
+    for (int i = 0; i < linksAmount; i++){
+        Vector2 dist = vectorSum(links[i].p2->pos, vectorMult(links[i].p1->pos, -1));
+        float absDist = sqrt(pow(dist.x, 2) + pow(dist.y, 2));
+        if (absDist != links[i].distance){
+            float difference = links[i].distance-absDist;
+            dist = vectorNorm(dist);
+            links[i].p1->pos = vectorSum(links[i].p1->pos, vectorMult(dist, difference/2));
+            links[i].p2->pos = vectorSum(links[i].p2->pos, vectorMult(dist, -difference/2));
+        }
+    }
+}
 
 
 //Funciones Graficas
@@ -95,7 +111,7 @@ void drawParticle(Particle *particle, int i) {
 
 void drawParticles() {
     for (int i = 0; i < particlesAmount; i++) {
-        drawParticle(&particles[i], i);
+        drawParticle(&particles[i], i+1);
     }
 }
 
@@ -111,13 +127,36 @@ void initParticle() {
     return;
 }
 
-void listElements(){
-    if (particlesAmount){
-        for (int i = 0; i < particlesAmount; i++){
-            printf("Particula %d: Posicion (%.2f, %.2f), Velocidad (%.2f, %.2f), Radio (%.2f), Masa (%.2f)\n",
-                i+1, particles[i].pos.x, particles[i].pos.y, particles[i].dpos.x, particles[i].dpos.y, particles[i].r, particles[i].m);
-        }
-        return;
+void initLink(){
+    if (particlesAmount < 2) {printf("No hay suficientes particulas para enlazar.\n"); return;}
+    int pIndex;
+    listParticles();
+    printf("Ingrese Particula 1:\n"); scanf("%d", &pIndex); links[linksAmount].p1 = &particles[pIndex-1];
+    printf("Ingrese Particula 2:\n"); scanf("%d", &pIndex); links[linksAmount].p2 = &particles[pIndex-1];
+    printf("Ingrese Distancia deseada:\n"); scanf("%f", &links[linksAmount].distance);
+    linksAmount++;
+    return;
+}
+
+void listParticles(){
+    if (!particlesAmount) {printf("No hay particulas creadas.\n"); return;}
+    for (int i = 0; i < particlesAmount; i++){
+        printf("Particula %d: Posicion (%.2f, %.2f), Velocidad (%.2f, %.2f), Radio (%.2f), Masa (%.2f)\n", i+1, particles[i].pos.x, particles[i].pos.y, particles[i].dpos.x, particles[i].dpos.y, particles[i].r, particles[i].m);
     }
-    printf("No hay particulas creadas.\n");
+    return;
+}
+
+void listLinks(){
+    if (!linksAmount) {printf("No hay links creados.\n"); return;}
+    for (int i = 0; i < linksAmount; i++){
+        printf("Link %d: Indice Particula A (%d), Indice Particula B (%d), Distancia Deseada (%.2f)\n",
+                    i+1, (int)links[i].p1 - (int)&links[0] + 1, (int)links[i].p2 - (int)&links[0] + 1, links[i].distance);
+    }
+    return;
+}
+
+void listElements(){
+    listParticles();
+    listLinks();
+    return;
 }

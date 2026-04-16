@@ -41,10 +41,11 @@ int main() {
             break;
         
         case 2:
-            initParticle(particles, particlesAmount);
+            initParticle();
             break;
         
         case 3:
+            initLink();
             break;
 
         case 4:
@@ -61,7 +62,7 @@ int main() {
             break;
             
         case 7:
-            listElements(particles);
+            listElements();
             break;
             
         case 0:

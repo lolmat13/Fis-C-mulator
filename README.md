@@ -31,8 +31,8 @@ Debido a que para este primer hito quisimos mantener nuestro enfoque en solo lo 
 Debido a distintas funciones que se encuentran presentes en esta libreria, las cuales son ampliamente utiles para el contexto de este proyecto, decidimos implementarla.\
 Los detalles de instalacion se encuentran en el GitHub de la libreria en si, la cual se encuentra presente en el siguiente link: https://github.com/raysan5/raylib
 # Referencias
-### - https://www.youtube.com/watch?v=NorXFOobehY (Teaching myself C so i can build a particle simulation)
-### - https://www.youtube.com/watch?v=7CM0dbib-Jw (Coding a particle simulation in C)
-### - https://www.youtube.com/watch?v=eED4bSkYCB8 (Building collision simulations: An introduction to computer graphics)
-### - https://github.com/raysan5/raylib (GitHub libreria RayLib)
+### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)
+### - [Coding a particle simulation in C](https://www.youtube.com/watch?v=7CM0dbib-Jw)
+### - [Building collision simulations: An introduction to computer graphics](https://www.youtube.com/watch?v=eED4bSkYCB8)
+### - [GitHub libreria RayLib](https://github.com/raysan5/raylib)
 

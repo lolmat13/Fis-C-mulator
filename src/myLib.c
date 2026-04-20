@@ -8,26 +8,6 @@ Link links[10];
 int particlesAmount = 0;
 int linksAmount = 0;
 
-//Funciones Vectoriales
-float dot(Vector2 v, Vector2 u){
-    return v.x * u.x + v.y * u.y;
-}
-
-Vector2 vectorSum(Vector2 v, Vector2 u){
-    Vector2 sum = {v.x + u.x, v.y + u.y};
-    return sum;
-}
-
-Vector2 vectorMult(Vector2 v, float n){
-    Vector2 scaled = {v.x * n, v.y * n};
-    return scaled;
-}
-
-Vector2 vectorNorm(Vector2 v){
-    Vector2 norm = vectorMult(v, 1/sqrt(dot(v, v)));
-    return norm;
-}
-
 //Funciones Fisicas
 void simulate() {
     updateParticles();
@@ -36,11 +16,11 @@ void simulate() {
 }
 
 void updateParticles() {
-    for (int i = 0; i < particlesAmount; i++){
+    for (int i = 0; i < particlesAmount; i++) {
         //Cambio de Posicion y aceleracion de gravedad
         Particle *particle = &particles[i];
         particle->dpos.y += GRAVITY / SUB_TICKS;
-        particle->pos = vectorSum(particle->pos, vectorMult(particle->dpos, 1 / SUB_TICKS));
+        particle->pos = Vector2Add(particle->pos, Vector2Scale(particle->dpos, 1 / SUB_TICKS));
         
         float x = particle->pos.x;
         float y = particle->pos.y;
@@ -54,7 +34,7 @@ void updateParticles() {
     }
 }
 
-void collideParticles(){
+void collideParticles() {
     Particle *p1;
     Particle *p2;
 
@@ -64,37 +44,30 @@ void collideParticles(){
             p2=&particles[j];
             if (CheckCollisionCircles(p1->pos, p1->r, p2->pos, p2->r)) {
                 //eliminar overlap
-                Vector2 dist = vectorSum(p1->pos, vectorMult(p2->pos, -1)); //vector desde p2 a p1
-                float absD = sqrt(dot(dist, dist)); //magnitud de ese vector
-                Vector2 normD = vectorNorm(dist);  //vector p2->p1 normalizado
+                Vector2 dist = Vector2Subtract(p1->pos, p2->pos); //vector desde p2 a p1
+                float absD = Vector2Length(dist); //magnitud de ese vector
+                Vector2 normD = Vector2Normalize(dist);  //vector p2->p1 normalizado
                 float overlap = p1->r + p2->r - absD;
-                p1->pos = vectorSum(p1->pos, vectorMult(normD, overlap / 2));
-                p2->pos = vectorSum(p2->pos, vectorMult(normD, -overlap / 2));
+                p1->pos = Vector2Add(p1->pos, Vector2Scale(normD, overlap / 2));
+                p2->pos = Vector2Subtract(p2->pos, Vector2Scale(normD, overlap / 2));
 
                 //cambio de direcicon vector velocidad  
-                Vector2 temp1 = p1->dpos;
-                Vector2 temp2 = p2->dpos;
-                Vector2 tanD = {-normD.y, normD.x};
-                Vector2 dpos1n = vectorMult(normD, dot(temp1, normD) / dot(normD, normD)); 
-                Vector2 dpos1t = vectorMult(tanD, dot(temp1, tanD) / dot(tanD, tanD));
-                Vector2 dpos2n = vectorMult(normD, dot(temp2, normD) / dot(normD, normD));
-                Vector2 dpos2t = vectorMult(tanD, dot(temp2, tanD) / dot(tanD, tanD));
-                p1->dpos = vectorMult(vectorSum(dpos2n, dpos1t), DAMPER);
-                p2->dpos = vectorMult(vectorSum(dpos1n, dpos2t), DAMPER);
+                p1->dpos = Vector2Reflect(p1->dpos, normD);
+                p2->dpos = Vector2Reflect(p2->dpos, normD);
             }
         }
     }
 }
 
-void maintainLinkDistance(){
-    for (int i = 0; i < linksAmount; i++){
+void maintainLinkDistance() {
+    for (int i = 0; i < linksAmount; i++) {
         Vector2 p1pos = links[i].p1->pos;
         Vector2 p2pos = links[i].p2->pos;
-        Vector2 dist = vectorSum(p2pos, vectorMult(p1pos, -1));
-        float dif = links[i].distance - (float)sqrt(dot(dist, dist));
-        if (fabs(dif) > 0.01){
-            links[i].p1->pos = vectorSum(p1pos, vectorMult(vectorNorm(dist), -dif/2));
-            links[i].p2->pos = vectorSum(p2pos, vectorMult(vectorNorm(dist), dif/2));
+        Vector2 dist = Vector2Subtract(p2pos, p1pos);
+        float dif = links[i].distance - Vector2Length(dist);
+        if (fabs(dif) > 0.01) {
+            links[i].p1->pos = Vector2Subtract(p1pos, Vector2Scale(Vector2Normalize(dist), dif/2));
+            links[i].p2->pos = Vector2Add(p2pos, Vector2Scale(Vector2Normalize(dist), dif/2));
         }
     }
 }
@@ -104,16 +77,18 @@ void maintainLinkDistance(){
 void drawParticles() {
     for (int i = 0; i < particlesAmount; i++) {
         DrawCircle(particles[i].pos.x, particles[i].pos.y, particles[i].r, WHITE);
-        char c[3];
-        sprintf(c, "%d", i+1);
-        DrawText(c, particles[i].pos.x-5, particles[i].pos.y-10, 20, BLACK);
     }
 }
 
 void drawLines() {
-    for (int i = 0; i < linksAmount; i++){
-        DrawLine(links[i].p1->pos.x, links[i].p1->pos.y, links[i].p2->pos.x, links[i].p2->pos.y, WHITE);
+    for (int i = 0; i < linksAmount; i++) {
+        DrawLineEx(links[i].p1->pos, links[i].p2->pos, 5, WHITE);
     }
+}
+
+void drawFrame() {
+    drawParticles();
+    drawLines();
 }
 
 //Funciones Misc
@@ -128,7 +103,7 @@ void initParticle() {
     return;
 }
 
-void initLink(){
+void initLink() {
     if (particlesAmount < 2) {printf("No hay suficientes particulas para enlazar.\n"); return;}
     int pIndex;
     listParticles();
@@ -139,24 +114,24 @@ void initLink(){
     return;
 }
 
-void listParticles(){
+void listParticles() {
     if (!particlesAmount) {printf("No hay particulas creadas.\n"); return;}
-    for (int i = 0; i < particlesAmount; i++){
+    for (int i = 0; i < particlesAmount; i++) {
         printf("Particula %d: Posicion (%.2f, %.2f), Velocidad (%.2f, %.2f), Radio (%.2f), Masa (%.2f)\n", i+1, particles[i].pos.x, particles[i].pos.y, particles[i].dpos.x, particles[i].dpos.y, particles[i].r, particles[i].m);
     }
     return;
 }
 
-void listLinks(){
+void listLinks() {
     if (!linksAmount) {printf("No hay links creados.\n"); return;}
-    for (int i = 0; i < linksAmount; i++){
+    for (int i = 0; i < linksAmount; i++) {
         printf("Link %d: Indice Particula A (%ld), Indice Particula B (%ld), Distancia Deseada (%.2f)\n",
                     i+1, (links[i].p1 - &particles[0]) + 1, (links[i].p2 - &particles[0]) + 1, links[i].distance);
     }
     return;
 }
 
-void listElements(){
+void listElements() {
     listParticles();
     listLinks();
     return;

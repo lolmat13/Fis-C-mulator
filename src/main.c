@@ -7,8 +7,7 @@ void mainLoop() { //Loop Simulacion
             for (int i = 0; i < SUB_TICKS; i++){
                 simulate();
             }
-            drawLines();
-            drawParticles();
+            drawFrame();
             DrawFPS(5,5);
         EndDrawing();
     }

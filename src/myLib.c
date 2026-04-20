@@ -24,8 +24,8 @@ Vector2 vectorMult(Vector2 v, float n){
 }
 
 Vector2 vectorNorm(Vector2 v){
-    Vector2 normD = vectorMult(v, (dot(v, v)));
-    return normD;
+    Vector2 norm = vectorMult(v, 1/sqrt(dot(v, v)));
+    return norm;
 }
 
 //Funciones Fisicas
@@ -89,29 +89,31 @@ void collideParticles(){
 
 void maintainLinkDistance(){
     for (int i = 0; i < linksAmount; i++){
-        Vector2 dist = vectorSum(links[i].p2->pos, vectorMult(links[i].p1->pos, -1));
-        float absDist = sqrt(pow(dist.x, 2) + pow(dist.y, 2));
-        if (absDist != links[i].distance){
-            float difference = links[i].distance-absDist;
-            dist = vectorNorm(dist);
-            links[i].p1->pos = vectorSum(links[i].p1->pos, vectorMult(dist, difference/2));
-            links[i].p2->pos = vectorSum(links[i].p2->pos, vectorMult(dist, -difference/2));
+        Vector2 p1pos = links[i].p1->pos;
+        Vector2 p2pos = links[i].p2->pos;
+        Vector2 dist = vectorSum(p2pos, vectorMult(p1pos, -1));
+        float dif = links[i].distance - (float)sqrt(dot(dist, dist));
+        if (fabs(dif) > 0.01){
+            links[i].p1->pos = vectorSum(p1pos, vectorMult(vectorNorm(dist), -dif/3));
+            links[i].p2->pos = vectorSum(p2pos, vectorMult(vectorNorm(dist), dif/3));
         }
     }
 }
 
 
 //Funciones Graficas
-void drawParticle(Particle *particle, int i) {
-    DrawCircle(particle->pos.x, particle->pos.y, particle->r, WHITE);
-    char c[3];
-    sprintf(c, "%d", i);
-    DrawText(c, particle->pos.x-5, particle->pos.y-10, 20, BLACK);
-}
-
 void drawParticles() {
     for (int i = 0; i < particlesAmount; i++) {
-        drawParticle(&particles[i], i+1);
+        DrawCircle(particles[i].pos.x, particles[i].pos.y, particles[i].r, WHITE);
+        char c[3];
+        sprintf(c, "%d", i+1);
+        DrawText(c, particles[i].pos.x-5, particles[i].pos.y-10, 20, BLACK);
+    }
+}
+
+void drawLines() {
+    for (int i = 0; i < linksAmount; i++){
+        DrawLine(links[i].p1->pos.x, links[i].p1->pos.y, links[i].p2->pos.x, links[i].p2->pos.y, WHITE);
     }
 }
 
@@ -149,8 +151,8 @@ void listParticles(){
 void listLinks(){
     if (!linksAmount) {printf("No hay links creados.\n"); return;}
     for (int i = 0; i < linksAmount; i++){
-        printf("Link %d: Indice Particula A (%d), Indice Particula B (%d), Distancia Deseada (%.2f)\n",
-                    i+1, (int)links[i].p1 - (int)&links[0] + 1, (int)links[i].p2 - (int)&links[0] + 1, links[i].distance);
+        printf("Link %d: Indice Particula A (%ld), Indice Particula B (%ld), Distancia Deseada (%.2f)\n",
+                    i+1, (links[i].p1 - &particles[0]) + 1, (links[i].p2 - &particles[0]) + 1, links[i].distance);
     }
     return;
 }

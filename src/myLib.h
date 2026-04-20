@@ -16,9 +16,6 @@ typedef struct {
     float r, m;
 } Particle;
 
-extern Particle particles[];
-extern int particlesAmount;
-
 typedef struct {
     Particle *p1, *p2;
     float distance;
@@ -37,9 +34,8 @@ void collideParticles();
 void maintainLinkDistance();
 
 //Funciones Graficas
-void drawParticle(Particle *particle, int i);
 void drawParticles();
-void drawLine();
+void drawLines();
 
 //Funciones Misc
 void initParticle();

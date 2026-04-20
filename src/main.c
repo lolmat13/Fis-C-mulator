@@ -1,13 +1,14 @@
 #include "myLib.h"
 
-void mainLoop(Particle particles[]) { //Loop Simulacion
+void mainLoop() { //Loop Simulacion
     while (!WindowShouldClose()){
         BeginDrawing();
             ClearBackground(BLACK);
             for (int i = 0; i < SUB_TICKS; i++){
-                simulate(particles);
+                simulate();
             }
-            drawParticles(particles);
+            drawLines();
+            drawParticles();
             DrawFPS(5,5);
         EndDrawing();
     }
@@ -37,7 +38,7 @@ int main() {
         case 1:
             InitWindow(WIDTH, HEIGHT, "Fis-C-mulator");
             SetTargetFPS(60);
-            mainLoop(particles);
+            mainLoop();
             break;
         
         case 2:
@@ -45,10 +46,10 @@ int main() {
             break;
         
         case 3:
-            initLink();
             break;
 
         case 4:
+            initLink();
             break;
             
         case 5:

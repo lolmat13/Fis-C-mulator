@@ -62,12 +62,11 @@ void collideParticles(){
         p1=&particles[i];
         for (int j = i+1; j < particlesAmount; j++) {
             p2=&particles[j];
-
             if (CheckCollisionCircles(p1->pos, p1->r, p2->pos, p2->r)) {
                 //eliminar overlap
                 Vector2 dist = vectorSum(p1->pos, vectorMult(p2->pos, -1)); //vector desde p2 a p1
                 float absD = sqrt(dot(dist, dist)); //magnitud de ese vector
-                Vector2 normD = vectorMult(dist, 1/absD);  //vector p2->p1 normalizado
+                Vector2 normD = vectorNorm(dist);  //vector p2->p1 normalizado
                 float overlap = p1->r + p2->r - absD;
                 p1->pos = vectorSum(p1->pos, vectorMult(normD, overlap / 2));
                 p2->pos = vectorSum(p2->pos, vectorMult(normD, -overlap / 2));
@@ -94,8 +93,8 @@ void maintainLinkDistance(){
         Vector2 dist = vectorSum(p2pos, vectorMult(p1pos, -1));
         float dif = links[i].distance - (float)sqrt(dot(dist, dist));
         if (fabs(dif) > 0.01){
-            links[i].p1->pos = vectorSum(p1pos, vectorMult(vectorNorm(dist), -dif/3));
-            links[i].p2->pos = vectorSum(p2pos, vectorMult(vectorNorm(dist), dif/3));
+            links[i].p1->pos = vectorSum(p1pos, vectorMult(vectorNorm(dist), -dif/2));
+            links[i].p2->pos = vectorSum(p2pos, vectorMult(vectorNorm(dist), dif/2));
         }
     }
 }

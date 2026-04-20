@@ -1,8 +1,6 @@
 #include <math.h>
 #include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include "raylib.h"
+#include "raylib.h" //No se incluye raymath.h, ya que esta libreraia agrega demasiadas funciones que no seran usadas. Por lo tanto las funciones vectoriales basicas se implementaran independientemente.
 #define WIDTH 1200
 #define HEIGHT 800
 #define ARRAY_SIZE(array) (sizeof(array)/sizeof(array[0]))

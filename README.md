@@ -27,8 +27,12 @@ Tenemos una simulacion basica entre una o varias particulas, las cuales pueden s
 Esta ya en progreso la funcion de unir varias particulas entre ellas, cumpliendo todas las mismas funciones de particulas individuales.
 ## Que nos falta hacer
 Debido a que para este primer hito quisimos mantener nuestro enfoque en solo lo escencial para asegurar que el simulador funcione correctamente, incluyendo en esas funcionalidades la visualizacion grafica de el proyecto y colisiones basicas, funciones como el roce o poleas se dejaran para hitos posteriores en el progreso del proyecto.
+# Instalacion libreria Raylib:
+Debido a distintas funciones que se encuentran presentes en esta libreria, las cuales son ampliamente utiles para el contexto de este proyecto, decidimos implementarla.\
+Los detalles de instalacion se encuentran en el GitHub de la libreria en si, la cual se encuentra presente en el siguiente link: https://github.com/raysan5/raylib
 # Referencias
 ### - https://www.youtube.com/watch?v=NorXFOobehY (Teaching myself C so i can build a particle simulation)
 ### - https://www.youtube.com/watch?v=7CM0dbib-Jw (Coding a particle simulation in C)
 ### - https://www.youtube.com/watch?v=eED4bSkYCB8 (Building collision simulations: An introduction to computer graphics)
 ### - https://github.com/raysan5/raylib (GitHub libreria RayLib)
+

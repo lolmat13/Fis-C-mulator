@@ -21,7 +21,14 @@ El proyecto, como mencionamos anteriormente, apunta a visualizar problemas que p
 
 Por ahora, planeamos tener listas las funciones de gravedad, particulas, y superficies colisionables, trabajando en el resto mientras avance el tiempo.
 ## Que hemos hecho hasta ahora
-Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion 
+### - Totalmente implementado:
+Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion.
+### - Mayormente implementado:
+Esta ya en progreso la funcion de unir varias particulas entre ellas, cumpliendo todas las mismas funciones de particulas individuales.
 ## Que nos falta hacer
-Faltan por añadir superficies colisionables y figuras hechas a partir de estas, ya que preferimos primeramente implementar las funciones basicas graficas del simulador, ya que estas son clave para su funcionamiento.
+Debido a que para este primer hito quisimos mantener nuestro enfoque en solo lo escencial para asegurar que el simulador funcione correctamente, incluyendo en esas funcionalidades la visualizacion grafica de el proyecto y colisiones basicas, funciones como el roce o poleas se dejaran para hitos posteriores en el progreso del proyecto.
 # Referencias
+### - https://www.youtube.com/watch?v=NorXFOobehY (Teaching myself C so i can build a particle simulation)
+### - https://www.youtube.com/watch?v=7CM0dbib-Jw (Coding a particle simulation in C)
+### - https://www.youtube.com/watch?v=eED4bSkYCB8 (Building collision simulations: An introduction to computer graphics)
+### - https://github.com/raysan5/raylib (GitHub libreria RayLib)

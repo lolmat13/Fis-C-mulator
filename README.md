@@ -38,7 +38,7 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
    Las lbrerias requeridas serian **ALSA**, para audio, **MESA** para graficos acelerados, y **X11**, para la aplicacion como ventana.
   - **Ubuntu**: `sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev`
   - **Fedora**: `sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic`
-  - **Bash**: `sudo apt update\`
+  - **Bash**: `sudo apt update`\
     `sudo apt install build-essential git make libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev`
 - **Raylib**: Para la instalacion de la libreria en si, podemos copiarla directameente desde git por medio de:
   - `https://github.com/raylib-extras/raylib-quickstart.git`

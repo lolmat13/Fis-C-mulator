@@ -28,8 +28,22 @@ Esta ya en progreso la funcion de unir varias particulas entre ellas, cumpliendo
 ## Que nos falta hacer
 Debido a que para este primer hito quisimos mantener nuestro enfoque en solo lo escencial para asegurar que el simulador funcione correctamente, incluyendo en esas funcionalidades la visualizacion grafica de el proyecto y colisiones basicas, funciones como el roce o poleas se dejaran para hitos posteriores en el progreso del proyecto.
 ## Instalacion libreria Raylib:
-Debido a distintas funciones que se encuentran presentes en esta libreria, las cuales son ampliamente utiles para el contexto de este proyecto, decidimos implementarla.\
-Los detalles de instalacion se encuentran en el GitHub de la libreria en si, la cual se encuentra presente en el siguiente link: https://github.com/raysan5/raylib
+Debido a distintas funciones, graficas y algebraicas que se encuentran presentes en esta libreria, las cuales son ampliamente utiles para el contexto de este proyecto, decidimos implementarla.
+### - Descarga en GNU Linux:
+La libreria tiene varias dependencias cruciales para su funcionamiento, por lo que primero revisaremos las herramientas necesarias.
+- **Herramientas*:
+  Un compilador GCC, make y git
+  - sudo apt install build-essential git
+- **Librerias**:
+   Las lbrerias requeridas serian **ALSA**, para audio, **MESA** para graficos acelerados, y **X11**, para la aplicacion como ventana.
+  - **Ubuntu**: sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+  - **Fedora**: sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic
+  - 
+
+
+https://github.com/raysan5/raylib
+
+
 # Referencias
 ### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)
 ### - [Coding a particle simulation in C](https://www.youtube.com/watch?v=7CM0dbib-Jw)

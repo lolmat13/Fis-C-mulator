@@ -38,10 +38,10 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
    Las lbrerias requeridas serian **ALSA**, para audio, **MESA** para graficos acelerados, y **X11**, para la aplicacion como ventana.
   - **Ubuntu**: sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
   - **Fedora**: sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic
-  - 
-
-
-https://github.com/raysan5/raylib
+  - **Asahi Remix (Apple Silicon)**: sudo dnf install libX11-devel libXrandr-devel libXi-devel libXcursor-devel mesa-libGL-devel pulseaudio-libs-devel libdrm-devel libXinerama-devel
+  - **Arch Linux**: sudo pacman -S alsa-lib mesa libx11 libxrandr libxi libxcursor libxinerama
+  - ** 
+- **Raylib**: Es importante mencionar que las descargas necesaraias para añadir la libreria se encuentran en: **https://github.com/raysan5/raylib**
 
 
 # Referencias

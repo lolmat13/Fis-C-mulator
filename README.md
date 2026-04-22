@@ -47,7 +47,7 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
     - Asegurar que ambos el archivo de proyecto y la bibloteca copiada de git esten un un mismo entorno
     - Correr el comando `./premake5 gmake`
     - Volver a la carpeta raiz
-    - Correr `make`
+    - Correr `make`\
 Con estos pasos debiese funcionar la libreria para el proyecto.
 # Referencias
 ### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)

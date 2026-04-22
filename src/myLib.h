@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#define WIDTH 1200
+#define WIDTH 800
 #define HEIGHT 800
 
 extern float DAMPER;
@@ -24,6 +24,7 @@ typedef struct {
 //Funciones Fisicas
 void updateParticles();
 void simulate();
+void resolveCollision();
 void collideParticles();
 void maintainLinkDistance();
 

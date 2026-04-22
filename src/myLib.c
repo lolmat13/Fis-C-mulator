@@ -10,9 +10,9 @@ int linksAmount = 0;
 
 //Funciones Fisicas
 void simulate() {
-    updateParticles();
     collideParticles(particles, particlesAmount);
     maintainLinkDistance();
+    updateParticles();
 }
 
 void updateParticles() {
@@ -43,17 +43,25 @@ void collideParticles() {
         for (int j = i+1; j < particlesAmount; j++) {
             p2=&particles[j];
             if (CheckCollisionCircles(p1->pos, p1->r, p2->pos, p2->r)) {
-                //eliminar overlap
                 Vector2 dist = Vector2Subtract(p1->pos, p2->pos); //vector desde p2 a p1
                 float absD = Vector2Length(dist); //magnitud de ese vector
-                Vector2 normD = Vector2Normalize(dist);  //vector p2->p1 normalizado
+                dist = Vector2Normalize(dist);  //vector p2->p1 normalizado
                 float overlap = p1->r + p2->r - absD;
-                p1->pos = Vector2Add(p1->pos, Vector2Scale(normD, overlap / 2));
-                p2->pos = Vector2Subtract(p2->pos, Vector2Scale(normD, overlap / 2));
+
+                //eliminar overlap
+                p1->pos = Vector2Add(p1->pos, Vector2Scale(dist, overlap / 2));
+                p2->pos = Vector2Subtract(p2->pos, Vector2Scale(dist, overlap / 2));
 
                 //cambio de direcicon vector velocidad  
-                p1->dpos = Vector2Reflect(p1->dpos, normD);
-                p2->dpos = Vector2Reflect(p2->dpos, normD);
+                Vector2 temp1 = p1->dpos;
+                Vector2 temp2 = p2->dpos;
+                Vector2 tanD = {-dist.y, dist.x};
+                Vector2 dpos1n = Vector2Scale(dist, Vector2DotProduct(temp1, dist) / Vector2DotProduct(dist, dist)); 
+                Vector2 dpos1t = Vector2Scale(tanD, Vector2DotProduct(temp1, tanD) / Vector2DotProduct(tanD, tanD));
+                Vector2 dpos2n = Vector2Scale(dist, Vector2DotProduct(temp2, dist) / Vector2DotProduct(dist, dist));
+                Vector2 dpos2t = Vector2Scale(tanD, Vector2DotProduct(temp2, tanD) / Vector2DotProduct(tanD, tanD));
+                p1->dpos = Vector2Scale(Vector2Add(dpos2n, dpos1t), DAMPER);
+                p2->dpos = Vector2Scale(Vector2Add(dpos1n, dpos2t), DAMPER);
             }
         }
     }
@@ -82,7 +90,7 @@ void drawParticles() {
 
 void drawLines() {
     for (int i = 0; i < linksAmount; i++) {
-        DrawLineEx(links[i].p1->pos, links[i].p2->pos, 5, WHITE);
+        DrawLineEx(links[i].p1->pos, links[i].p2->pos, 4, WHITE);
     }
 }
 

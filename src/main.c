@@ -1,6 +1,8 @@
 #include "myLib.h"
 
 void mainLoop() { //Loop Simulacion
+    InitWindow(WIDTH, HEIGHT, "Fis-C-mulator");
+    SetTargetFPS(60);
     while (!WindowShouldClose()){
         BeginDrawing();
             ClearBackground(BLACK);
@@ -35,8 +37,6 @@ int main() {
 
         switch (flag){
         case 1:
-            InitWindow(WIDTH, HEIGHT, "Fis-C-mulator");
-            SetTargetFPS(60);
             mainLoop();
             break;
         

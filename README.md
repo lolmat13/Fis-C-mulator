@@ -44,8 +44,8 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
   - `https://github.com/raylib-extras/raylib-quickstart.git`
   - `git clone https://github.com/raylib-extras/raylib-quickstart.git`\
   Luego de esto, podemos incluirla al proyecto por medio de:
-    - Asegurar que ambos el archivo de proyecto y la bibloteca copiada de git esten un un mismo entorno
-    - Correr el comando `./premake5 gmake`
+    - El directorio se descargara como `raylib-quickstart`, y trabajaremos dentro de este
+    - Correr el comando `./premake5 gmake` en la carpeta `build` dentro del directorio 
     - Volver a la carpeta raiz
     - Correr `make`\
 Con estos pasos debiese funcionar la libreria para el proyecto.

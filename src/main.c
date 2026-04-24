@@ -18,7 +18,6 @@ void mainLoop() { //Loop Simulacion
 
 int main() { 
     int flag;
-    //INICIO MENU
     do
     {
         printf(
@@ -30,6 +29,7 @@ int main() {
             "5. Configurar Gravedad.\n"
             "6. Configurar Perdida de energia.\n"
             "7. Listar Elementos.\n"
+            "8. Eliminar Todos los Elementos.\n"
             "0. Cerrar Programa.\n"
         );
 
@@ -45,26 +45,40 @@ int main() {
             break;
         
         case 3:
+            printf("Funcion no implementada.\n");
             break;
 
         case 4:
+            printf("Esta funcion esta implementada, pero la fisica de particulas conectadas no esta completa.\n");
             initLink();
             break;
             
         case 5:
-            printf("Ingresar valor gravedad (Numero Real Positivo, Default 0).\n");
-            scanf("%f", &GRAVITY);
+            gravity: 
+            printf("Ingresar valor gravedad ([Real], Default 0).\n");
+            if(!scanf("%f", &GRAVITY)){
+                printf("Input Invalido.\n");
+                goto gravity;
+            }
             break;
             
         case 6:
+            damper: 
             printf("Ingresar coeficiente energia despues de colision ([0, 1], Default: 1).\n");
-            scanf("%f", &DAMPER);
+            if(!scanf("%f", &DAMPER)){
+                printf("Input Invalido.\n");
+                goto damper;
+            }
             break;
             
         case 7:
             listElements();
             break;
             
+        case 8:
+            clearAll();
+            break;
+
         case 0:
             printf("Cerrando programa.\n");
             break;
@@ -74,8 +88,6 @@ int main() {
             break;
         }
     } while (flag);
-    
-    //FIN MENU
 
     return 0;
 }

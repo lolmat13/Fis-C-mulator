@@ -34,6 +34,7 @@ void drawLines();
 void drawFrame();
 
 //Funciones Misc
+void clearAll();
 void initParticle();
 void initLink();
 void listParticles();

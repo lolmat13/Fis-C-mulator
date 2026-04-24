@@ -100,13 +100,55 @@ void drawFrame() {
 }
 
 //Funciones Misc
+void clearAll() {
+    particlesAmount = 0;
+    linksAmount = 0;
+    printf("Se Eliminaron todos los Elementos.\n");
+}
+
 void initParticle() {
-    printf("Ingrese posicion inicial X (Numero Real):\n"); scanf("%f", &particles[particlesAmount].pos.x);
-    printf("Ingrese posicion inicial Y (Numero Real):\n"); scanf("%f", &particles[particlesAmount].pos.y);
-    printf("Ingrese velocidad inicial X (Numero Real):\n"); scanf("%f", &particles[particlesAmount].dpos.x);
-    printf("Ingrese velocidad inicial Y (Numero Real):\n"); scanf("%f", &particles[particlesAmount].dpos.y);
-    printf("Ingrese radio (Numero Real):\n"); scanf("%f", &particles[particlesAmount].r); 
-    printf("Ingrese masa (Numero Real):\n"); scanf("%f", &particles[particlesAmount].m);
+    posX: 
+    printf("Ingrese posicion inicial X [0-800]:\n"); 
+    if(!scanf("%f", &particles[particlesAmount].pos.x)) {    //Si scanf no logra asignar el valor, avisar que el input es invalido, reintentar input.
+        printf("Input Invalido.\n");                        //Esto solo evita errores de tipo de dato, no restringe valores permitidos
+        goto posX;
+    }
+
+    posY: 
+    printf("Ingrese posicion inicial Y [0-800]:\n");
+    if(!scanf("%f", &particles[particlesAmount].pos.y)) {
+        printf("Input Invalido.\n");
+        goto posY;
+    }
+
+    dposX: 
+    printf("Ingrese velocidad inicial X [Real]:\n");
+    if(!scanf("%f", &particles[particlesAmount].dpos.x)) {
+        printf("Input Invalido.\n");
+        goto dposX;
+    }
+
+    dposY: 
+    printf("Ingrese velocidad inicial Y [Real]:\n");
+    if(!scanf("%f", &particles[particlesAmount].dpos.y)) {
+        printf("Input Invalido.\n");
+        goto dposY;
+    }
+
+    r: 
+    printf("Ingrese radio [Real Positivo]:\n");
+    if(!scanf("%f", &particles[particlesAmount].r)) {
+        printf("Input Invalido.\n");
+        goto r;
+    }
+
+    m: 
+    printf("Ingrese masa (no implementada) [Real Positivo]:\n");
+    if(!scanf("%f", &particles[particlesAmount].m)) {
+        printf("Input Invalido.\n");
+        goto m;
+    }
+
     particlesAmount++;
     return;
 }
@@ -115,9 +157,30 @@ void initLink() {
     if (particlesAmount < 2) {printf("No hay suficientes particulas para enlazar.\n"); return;}
     int pIndex;
     listParticles();
-    printf("Ingrese Particula 1:\n"); scanf("%d", &pIndex); links[linksAmount].p1 = &particles[pIndex-1];
-    printf("Ingrese Particula 2:\n"); scanf("%d", &pIndex); links[linksAmount].p2 = &particles[pIndex-1];
-    printf("Ingrese Distancia deseada:\n"); scanf("%f", &links[linksAmount].distance);
+
+    p1: 
+    printf("Ingrese Indice Particula 1:\n");
+    if(!scanf("%d", &pIndex)) {          //Si scanf no logra asignar el valor, avisar que el input es invalido, reintentar input.
+        printf("Input Invalido.\n");    //Esto solo evita errores de tipo de dato, no restringe valores permitidos
+        goto p1;
+    }
+    links[linksAmount].p1 = &particles[pIndex-1];
+
+    p2: 
+    printf("Ingrese Indice Particula 2:\n");
+    if(!scanf("%d", &pIndex)) {
+        printf("Input Invalido.\n");
+        goto p2;
+    } 
+    links[linksAmount].p2 = &particles[pIndex-1];
+
+    distance: 
+    printf("Ingrese Distancia a mantener deseada:\n");
+    if(!scanf("%f", &links[linksAmount].distance)) {
+        printf("Input Invalido.\n");
+        goto distance;
+    }
+
     linksAmount++;
     return;
 }
@@ -134,7 +197,7 @@ void listLinks() {
     if (!linksAmount) {printf("No hay links creados.\n"); return;}
     for (int i = 0; i < linksAmount; i++) {
         printf("Link %d: Indice Particula A (%ld), Indice Particula B (%ld), Distancia Deseada (%.2f)\n",
-                    i+1, (links[i].p1 - &particles[0]) + 1, (links[i].p2 - &particles[0]) + 1, links[i].distance);
+                i+1, (links[i].p1 - &particles[0]) + 1, (links[i].p2 - &particles[0]) + 1, links[i].distance);
     }
     return;
 }

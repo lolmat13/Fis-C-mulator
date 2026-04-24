@@ -36,14 +36,19 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
   - sudo apt install build-essential git
 - **Librerias**:
    Las lbrerias requeridas serian **ALSA**, para audio, **MESA** para graficos acelerados, y **X11**, para la aplicacion como ventana.
-  - **Ubuntu**: sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
-  - **Fedora**: sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic
-  - 
-
-
-https://github.com/raysan5/raylib
-
-
+  - **Ubuntu**: `sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev`
+  - **Fedora**: `sudo dnf install alsa-lib-devel mesa-libGL-devel libX11-devel libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel libatomic`
+  - **Bash**: `sudo apt update`\
+    `sudo apt install build-essential git make libasound2-dev mesa-common-dev libx11-dev libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev libglu1-mesa-dev`
+- **Raylib**: Para la instalacion de la libreria en si, podemos copiarla directamente desde git por medio de:
+  - `https://github.com/raylib-extras/raylib-quickstart.git`
+  - `git clone https://github.com/raylib-extras/raylib-quickstart.git`\
+  Luego de esto, podemos incluirla al proyecto por medio de:
+    - El directorio se descargara como `raylib-quickstart`, y trabajaremos dentro de este
+    - Correr el comando `./premake5 gmake` en la carpeta `build` dentro del directorio 
+    - Volver a la carpeta raiz
+    - Correr `make`\
+Con estos pasos debiese funcionar la libreria para el proyecto.
 # Referencias
 ### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)
 ### - [Coding a particle simulation in C](https://www.youtube.com/watch?v=7CM0dbib-Jw)

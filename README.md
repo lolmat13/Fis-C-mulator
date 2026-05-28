@@ -43,12 +43,18 @@ La libreria tiene varias dependencias cruciales para su funcionamiento, por lo q
 - **Raylib**: Para la instalacion de la libreria en si, podemos copiarla directamente desde git por medio de:
   - `https://github.com/raylib-extras/raylib-quickstart.git`
   - `git clone https://github.com/raylib-extras/raylib-quickstart.git`\
-  Luego de esto, podemos incluirla al proyecto por medio de:
-    - El directorio se descargara como `raylib-quickstart`, y trabajaremos dentro de este
-    - Correr el comando `./premake5 gmake` en la carpeta `build` dentro del directorio 
-    - Volver a la carpeta raiz
-    - Correr `make`\
+  Luego de esto:
+    - El directorio se descargara como `raylib-quickstart`, y para conveniencia, la renombraremos a `fiscmulator`
+    - En este directorio ya se encuentra un directorio `src`, el cual vaciaremos (`cd fiscmulator/src`, `rm *`). 
+    - Correr el comando `./premake5 gmake` en la carpeta `build` dentro del directorio `fiscmulator`.
+
 Con estos pasos debiese funcionar la libreria para el proyecto.
+## Instalacion de Fiscmulator:
+Debido a que el directorio clonado de quickstart de raylib viene con las funciones que ocupamos para nuestro proyecto listas, trabajaremos en el directorio `src` que vaciamos anteriormente, por lo que para la instalacion ahora:
+
+- Agregaremos los archivos de nuestra carpeta `src` (`main.c`, `myLib.c`, `myLib.h`) al directorio `src` de `fiscmulator`.
+- Volveremos a la raiz (`fiscmulator`) y correremos `make`.
+- Luego de esto el programa se puede ejecutar ocupando `./bin/Debug/fiscmulator`.
 # Referencias
 ### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)
 ### - [Coding a particle simulation in C](https://www.youtube.com/watch?v=7CM0dbib-Jw)

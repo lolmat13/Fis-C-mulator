@@ -1,2 +1,3 @@
 # Uso de IA
-No se ha hecho uso de IA Generativa en la creacion de este proyecto.
+- Se ocupo IA generativa para comprobar el metodo de descarga, compilacion y ejecucion de nuestro proyecto en WSL para windows. 
+- Se usó IA generativa para hacer ejemplos en la primera version del guion del video 

@@ -3,7 +3,7 @@
 std::vector<VerletParticle> particles;
 std::vector<Link> links;
 
-int SUB_TICKS = 100;
+int SUB_TICKS = 1;
 double dt = (double)1/SUB_TICKS;
 Vector2 gravity = {0.0f, 1.0f};
 
@@ -134,6 +134,10 @@ void initSquare(Vector2 Center, float sideLength, Vector2 velocity) { //im so so
     initParticle(VerletParticle({Center.x + sideLength, Center.y -sideLength}, 1, 1), Vector2Zero());
     initParticle(VerletParticle({Center.x - sideLength, Center.y +sideLength}, 1, 1), Vector2Zero());
     initParticle(VerletParticle({Center.x + sideLength, Center.y +sideLength}, 1, 1), Vector2Zero());
+    particles[particles.size()-1].setMass(sideLength*sideLength/4);
+    particles[particles.size()-2].setMass(sideLength*sideLength/4);
+    particles[particles.size()-3].setMass(sideLength*sideLength/4);
+    particles[particles.size()-4].setMass(sideLength*sideLength/4);
     particles[particles.size()-1].setVelocity(velocity);
     particles[particles.size()-2].setVelocity(velocity);
     particles[particles.size()-3].setVelocity(velocity);
@@ -331,13 +335,15 @@ int main() {
     // initParticle(VerletParticle({800, 600}, 10), {-3, 0});
 
     // //Stress Test
-    // Vector2 c = {WIDTH/4, HEIGHT/4};
-    // for (int i = 0; i < 5; i++) {
-    //     for (int j = 0; j < 5; j++) {
-    //         initParticle(VerletParticle(Vector2Add(c, {i*20.0f, j*20.0f}), 10, 1), {0, 0});
-    //     }
-    // }
-    // c = {WIDTH/2, HEIGHT/2};
+    Vector2 c = {200, 200};
+    int square = 35;
+    float r = 2;
+    for (int i = 0; i < square; i++) {
+        for (int j = 0; j < square; j++) {
+            initParticle(VerletParticle(Vector2Add(c, {i*r*2, j*r*2}), r, 1), {0, 0});
+        }
+    }
+    // c = {200, 400};
     // for (int i = 0; i < 5; i++) {
     //     for (int j = 0; j < 5; j++) {
     //         initParticle(VerletParticle(Vector2Add(c, {i*40.0f, j*40.0f}), 20, 1), {0, 0});
@@ -386,31 +392,31 @@ int main() {
 
     // //Compound Shape on Particle Test
     // initSquare({400, 400}, 100, {0, 0});
-    // initParticle(VerletParticle({650, 350}, 10), {-2, 0});
+    // initParticle(VerletParticle({650, 350}, 50, 1), {-2, 0});
 
     // //Particle on Link Particle Test
-    initParticle(VerletParticle({400, 300}, 10, 1), {0, 0});
-    initParticle(VerletParticle({400, 500}, 10, 1), {0, 0});
-    initParticle(VerletParticle({600, 300}, 10, 1), {-2, 0});
-    initParticle(VerletParticle({200, 500}, 10, 1), {2, 0});
-    initLink(0, 1, 200);
+    // initParticle(VerletParticle({400, 300}, 10, 1), {0, 0});
+    // initParticle(VerletParticle({400, 500}, 10, 1), {0, 0});
+    // initParticle(VerletParticle({600, 300}, 10, 1), {-2, 0});
+    // initParticle(VerletParticle({200, 500}, 10, 1), {2, 0});
+    // initLink(0, 1, 200);
 
     // //Rope Test
     // initParticle(VerletParticle({400, 400}, 100, 0), {0, 0});
-    // initParticle(VerletParticle({200, 200}, 5, 1), {0, 1});
-    // initParticle(VerletParticle({600, 200}, 5, 1), {0, 1});
+    // initParticle(VerletParticle({200, 250}, 1, 1), {0, 1});
+    // initParticle(VerletParticle({600, 250}, 1, 1), {0, 1});
     // initRope(1,2);
 
     // //Manual Rope Test
-    // initParticle(VerletParticle({200, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({250, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({300, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({350, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({400, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({450, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({500, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({550, 300}, 1, 1), {0, 0});
-    // initParticle(VerletParticle({600, 300}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({200, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({250, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({300, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({350, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({400, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({450, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({500, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({550, 250}, 1, 1), {0, 0});
+    // initParticle(VerletParticle({600, 250}, 1, 1), {0, 0});
     // initLink(0, 1, 50);
     // initLink(1, 2, 50);
     // initLink(2, 3, 50);
@@ -419,7 +425,7 @@ int main() {
     // initLink(5, 6, 50);
     // initLink(6, 7, 50);
     // initLink(7, 8, 50);
-    // initParticle(VerletParticle({400, 400}, 50, 0), {0, 0});
+    // initParticle(VerletParticle({400, 400}, 100, 0), {0, 0});
 
     // //Static Surface Test
     // initParticle(VerletParticle({50, 400}, 1, 0), {0, 0});

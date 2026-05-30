@@ -19,7 +19,6 @@ El proyecto, como mencionamos anteriormente, apunta a visualizar problemas que p
 - Poleas
 - Resortes
 
-Por ahora, planeamos tener listas las funciones de gravedad, particulas, y superficies colisionables, trabajando en el resto mientras avance el tiempo.
 ## Que hemos hecho hasta ahora
 ### - Totalmente implementado:
 Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion, junto con dar la posibilidad de unir estas para generar figuraas sencillas.\

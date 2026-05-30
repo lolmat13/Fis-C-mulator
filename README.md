@@ -22,7 +22,7 @@ El proyecto, como mencionamos anteriormente, apunta a visualizar problemas que p
 ## Que hemos hecho hasta ahora
 ### - Totalmente implementado:
 Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion, junto con dar la posibilidad de unir estas para generar figuraas sencillas.\
-Tambien ya estan implementadas figuras colisionables que funcionan de la misma forma que los bordes de la pantalla, con las particulas pudiendo colisionar correctamente con ellas. Tambien cabe la pena mencionar que no hay un limite de particulas que puedan estar presentes en la simulacion, junto con el hehco de haber transpasado exitosamente el programa de C a C++
+Tambien ya estan implementadas figuras colisionables que funcionan de la misma forma que los bordes de la pantalla, con las particulas pudiendo colisionar correctamente con ellas. Tambien cabe la pena mencionar que no hay un limite de particulas que puedan estar presentes en la simulacion, junto con el hehco de haber transpasado exitosamente el programa de C a C++.
 ### - Mayormente implementado:
 Las superficies colisionables estan totalmente desarrolladas, sin embargo, aun estan en desarrollo superficies dinamicas, lo cual quedara para el hito 3. Tambien se esta trabajando la funcion de crear cuerdas, pero todavia no es del todo funcional, funcionando de forma ligeramente erratica
 ## Que nos falta hacer

@@ -1,6 +1,6 @@
 # La Mision
 ## A los alumnos de FIS111 les cuesta visualizar e intuir situaciones y problemas de fisica general mecanica.
-El proposito de este proyecto es ayudar a los alumnos de FIS111 a desarrollar una mejor intuicion de los problemas que prodrian encontrar en el ramo.\
+El proposito de este proyecto es ayudar a los alumnos de FIS111 a desarrollar una mejor intuicion de los problemas que podrian encontrar en el ramo.\
 Este programa les servira para poder jugar con distintas situaciones fisicas, y asi lograr internalizar la intuicion y sentido comun para guiarlos en una direccion general de soluciones al momento de realizar evaluaciones.
 
 # El Equipo
@@ -22,13 +22,14 @@ El proyecto, como mencionamos anteriormente, apunta a visualizar problemas que p
 Por ahora, planeamos tener listas las funciones de gravedad, particulas, y superficies colisionables, trabajando en el resto mientras avance el tiempo.
 ## Que hemos hecho hasta ahora
 ### - Totalmente implementado:
-Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion.
+Tenemos una simulacion basica entre una o varias particulas, las cuales pueden ser expuestas a gravedad o funcionar sin esta, y tienen la capacidad de colisionar entre si mismas y con los bordes de la simulacion, junto con dar la posibilidad de unir estas para generar figuraas sencillas. Tambien ya estan implementadas figuras colisionables que funcionan de la misma forma que los bordes de la pantalla, con las particulas pudiendo colisionar correctamente con ellas. Tambien cabe la pena mencionar que no hay un limite de particulas que puedan estar presentes en la simulacion, junto con el hehco de haber transpasado exitosamente el programa de C a C++
 ### - Mayormente implementado:
-Esta ya en progreso la funcion de unir varias particulas entre ellas, cumpliendo todas las mismas funciones de particulas individuales.
+Las superficies colisionables estan totalmente desarrolladas, sin embargo, aun estan en desarrollo superficies dinamicas, lo cual quedara para el hito 3. Tambien se esta trabajando la funcion de crear cuerdas, pero todavia no es del todo funcional, funcionando de forma ligeramente erratica
 ## Que nos falta hacer
-Debido a que para este primer hito quisimos mantener nuestro enfoque en solo lo escencial para asegurar que el simulador funcione correctamente, incluyendo en esas funcionalidades la visualizacion grafica de el proyecto y colisiones basicas, funciones como el roce o poleas se dejaran para hitos posteriores en el progreso del proyecto.
+Nos falta por rehacer un menu para poder implementar personalmente figuras y superficies, o controlar variables como la gravedad, cosa que se perdio en la transicion de C a C++, por lo que aun se esta rehaciendo
 ## Instalacion libreria Raylib:
 Debido a distintas funciones, graficas y algebraicas que se encuentran presentes en esta libreria, las cuales son ampliamente utiles para el contexto de este proyecto, decidimos implementarla.
+- Es importante mencionar que es recomendable realizar la instalacion de los archivos en un quickstart distinto de el ocupado para el hito anterior debido a los archivos que  quedan de residuo en el guardado de este, complicando innecesariamente la descarga y funcionamiento del proyecto. 
 ### - Descarga en GNU Linux:
 La libreria tiene varias dependencias cruciales para su funcionamiento, por lo que primero revisaremos las herramientas necesarias.
 - **Herramientas*:
@@ -52,9 +53,10 @@ Con estos pasos debiese funcionar la libreria para el proyecto.
 ## Instalacion de Fiscmulator:
 Debido a que el directorio clonado de quickstart de raylib viene con las funciones que ocupamos para nuestro proyecto listas, trabajaremos en el directorio `src` que vaciamos anteriormente, por lo que para la instalacion ahora:
 
-- Agregaremos los archivos de nuestra carpeta `src` (`main.c`, `myLib.c`, `myLib.h`) al directorio `src` de `fiscmulator`.
-- Volveremos a la raiz (`fiscmulator`) y correremos `make`.
+- Agregaremos los archivos de nuestra carpeta `src` (`myLib.cpp`, `myLib.h`) al directorio `src` de fiscmulator.
+- Volveremos a la raiz (`fiscmulator`) y correremos `make` (`make` se encarga de la compilacion del proyecto antes de ejecutarlo).
 - Luego de esto el programa se puede ejecutar ocupando `./bin/Debug/fiscmulator`.
+
 # Referencias
 ### - [Teaching myself C so i can build a particle simulation](https://www.youtube.com/watch?v=NorXFOobehY)
 ### - [Coding a particle simulation in C](https://www.youtube.com/watch?v=7CM0dbib-Jw)
